@@ -1,12 +1,12 @@
-SRC = clock.c
+SRC = cliclocker.c
 CC = cc
-BIN = cli-clock
+BIN = cliclocker
 INSTALLPATH = /usr/local/bin/
 CFLAGS = -Wall -std=c99
 LDFLAGS = -lcurses
 
 
-cli-clock : ${SRC}
+cliclocker : ${SRC}
 
 	@echo "build ${SRC}"
 	@echo "CC ${CFLAGS} ${LDFLAGS} ${SRC}"
