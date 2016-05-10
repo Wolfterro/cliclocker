@@ -110,11 +110,3 @@ static char* getdate(void)
 
 	return fulldate;
 }
-
-/*
-int main() {
-	getdate();
-	printf("%s\n", fulldate);
-	return 0;
-}
-*/
