@@ -2,15 +2,15 @@ SRC = cliclocker.c
 CC = cc
 BIN = cliclocker
 INSTALLPATH = /usr/local/bin/
-CFLAGS = -Wall -std=c99
+CFLAGS = -Wall
 LDFLAGS = -lcurses
 
 
 cliclocker : ${SRC}
 
 	@echo "build ${SRC}"
-	@echo "CC ${CFLAGS} ${LDFLAGS} ${SRC}"
-	@${CC} ${CFLAGS} ${LDFLAGS} ${SRC} -o ${BIN}
+	@echo "CC ${SRC} ${CFLAGS} ${LDFLAGS}"
+	@${CC} ${SRC} -o ${BIN} ${LDFLAGS} ${CFLAGS}
 
 install : ${BIN}
 
