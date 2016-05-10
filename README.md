@@ -25,7 +25,13 @@
       white
 
 ###### Cliclocker is a fork of cliclock from Youri "nbyouri" Mouton
-###### This fork adds a color selector and a help menu as an argument and may add some other things in the future.
+###### This fork adds:
+- A color selector
+- Full date and day of the week
+- Border around the window
+- Help menu as an argument
+
+###### I may add some other things in the future.
 
 ### Install:
 
