@@ -199,8 +199,8 @@ static void key_event(void)
 
 static void help(void)
 {
-    printf("cliclocker: A simple CLI clock\n");
-    printf("------------------------------\n");
+    printf("cliclocker: A fork of a simple CLI clock\n");
+    printf("----------------------------------------\n");
     printf("Usage: cliclocker [arguments] [color]\n\n");
 
     printf("Arguments:\n");
