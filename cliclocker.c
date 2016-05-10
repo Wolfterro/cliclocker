@@ -8,6 +8,7 @@
 #include <signal.h>
 #include <stdbool.h>
 #include <string.h>
+#include <getdate.h>
 
 typedef struct {
     bool running;
@@ -29,6 +30,7 @@ typedef struct {
     time_t lt;
 
     WINDOW *framewin;
+    WINDOW *bgwin;
 
 } cliclocker_t;
 
@@ -93,6 +95,11 @@ static void init(void)
     cliclocker->lt = time(NULL);
     update_hour();
 
+    /* Create border win */
+    cliclocker->bgwin = newwin(0,0,0,0);
+    nodelay(stdscr, true);
+    wrefresh(cliclocker->bgwin);
+
     /* Create clock win */ 
     cliclocker->framewin = newwin(cliclocker->geo.h,
             cliclocker->geo.w,
@@ -150,6 +157,7 @@ static void draw_number(int n, int x, int y)
         wbkgdset(cliclocker->framewin, COLOR_PAIR(number[n][i/2]));
         mvwaddch(cliclocker->framewin, x, sy, ' ');
     }
+    wrefresh(cliclocker->bgwin);
     wrefresh(cliclocker->framewin);
 
     return;
@@ -157,6 +165,8 @@ static void draw_number(int n, int x, int y)
 
 static void draw_clock(void)
 {
+    /* Getting date */
+    getdate();
     /* Draw hour numbers */
     draw_number(cliclocker->date.hour[0], 1, 1);
     draw_number(cliclocker->date.hour[1], 1, 8);
@@ -174,6 +184,10 @@ static void draw_clock(void)
     /* Draw second numbers */
     draw_number(cliclocker->date.second[0], 1, 39);
     draw_number(cliclocker->date.second[1], 1, 46);
+    /* Draw border and date */
+    wbkgdset(cliclocker->bgwin, COLOR_PAIR(1));
+    box(cliclocker->bgwin, 0, 0);
+    mvwaddstr(cliclocker->bgwin, 0, 1, fulldate);
 }
 
 static void clock_move(int x, int y)
