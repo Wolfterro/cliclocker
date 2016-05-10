@@ -29,7 +29,7 @@
 - A color selector
 - Full date and day of the week
 - Border around the window
-- Help menu as an argument
+- Help menu
 
 ###### I may add some other things in the future.
 
