@@ -39,9 +39,13 @@ static void update_hour(void);
 static void draw_number(int n, int x, int y);
 static void draw_clock(void);
 static void clock_move(int x, int y);
+static void change_color(int cc);
+static void key_event(void);
+static void cliclocker_main(int chcolor);
 static void signal_handler(int signal);
 
 cliclocker_t *cliclocker;
+int cc = 0;
 
 static const bool number[][15] = {
     {1,1,1,1,0,1,1,0,1,1,0,1,1,1,1}, /* 0 */
@@ -196,13 +200,112 @@ static void clock_move(int x, int y)
     return;
 }
 
+static void change_color(int cc)
+{
+    switch (cc) {
+        case 0:
+            cliclocker->running = false;
+            cliclocker->option.color = COLOR_BLACK;
+            init();
+            while(cliclocker->running) {
+                update_hour();
+                draw_clock();
+                key_event();
+            }
+            break;
+        case 1:
+            cliclocker->running = false;
+            cliclocker->option.color = COLOR_RED;
+            init();
+            while(cliclocker->running) {
+                update_hour();
+                draw_clock();
+                key_event();
+            }
+            break;
+        case 2:
+            cliclocker->running = false;
+            cliclocker->option.color = COLOR_GREEN;
+            init();
+            while(cliclocker->running) {
+                update_hour();
+                draw_clock();
+                key_event();
+            }
+            break;
+        case 3:
+            cliclocker->running = false;
+            cliclocker->option.color = COLOR_YELLOW;
+            init();
+            while(cliclocker->running) {
+                update_hour();
+                draw_clock();
+                key_event();
+            }
+            break;
+        case 4:
+            cliclocker->running = false;
+            cliclocker->option.color = COLOR_MAGENTA;
+            init();
+            while(cliclocker->running) {
+                update_hour();
+                draw_clock();
+                key_event();
+            }
+            break;
+        case 5:
+            cliclocker->running = false;
+            cliclocker->option.color = COLOR_CYAN;
+            init();
+            while(cliclocker->running) {
+                update_hour();
+                draw_clock();
+                key_event();
+            }
+            break;
+        case 6:
+            cliclocker->running = false;
+            cliclocker->option.color = COLOR_WHITE;
+            init();
+            while(cliclocker->running) {
+                update_hour();
+                draw_clock();
+                key_event();
+            }
+            break;
+        default:
+            cliclocker->running = false;
+            cliclocker->option.color = COLOR_BLUE;
+            init();
+            while(cliclocker->running) {
+                update_hour();
+                draw_clock();
+                key_event();
+            }
+            break;
+    }
+
+    return;
+}
+
 static void key_event(void)
 {
     int c;
+
     struct timespec length = { 0, cliclocker->option.delay };
     switch(c = wgetch(stdscr)) {
         case 'q':
             cliclocker->running = false;
+            break;
+        case 'c':
+            if (cc < 7) {
+                cc += 1;
+                change_color(cc);
+            }
+            else {
+                cc = 0;
+                change_color(cc);
+            }
             break;
         default:
             nanosleep(&length, NULL);
@@ -232,6 +335,9 @@ static void help(void)
     printf("  magenta\n");
     printf("  cyan\n");
     printf("  white\n\n");
+
+    printf("- Press 'q' to quit the program\n");
+    printf("- Press 'c' to change foreground color\n\n");
 
     printf("Cliclocker is a fork of cliclock from Youri \"nbyouri\" Mouton\n");
 
