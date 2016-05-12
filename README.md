@@ -6,8 +6,9 @@
 ###### This is a simple, 24 hours format clock that runs in a Command Line Interface (CLI).
 ###### You can change the foreground color by using -c or --color as an argument.
 ###### You can view the help menu by using -h or --help as an argument.
-###### Use 'c' to change foreground color.
-###### Use 'q' to quit the program.
+###### Press 'c' to change foreground color.
+###### Press 'b' to enable/disable colored border.
+###### Press 'q' to quit the program.
 
       Usage: cliclocker [arguments] [color]
       
@@ -31,6 +32,7 @@
 - Color changer (in the program)
 - Full date and day of the week
 - Border around the window
+- Border changer (simple or colored)
 - Help menu (argument)
 
 ###### I may add some other things in the future.
