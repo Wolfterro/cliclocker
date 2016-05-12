@@ -2,12 +2,8 @@ char fulldate[128];
 
 static char* getdate(void)
 {
-    int weekday_int;
-    int monthname_int;
-    int day_int;
-
-    char weekday[16];
-    char monthname[16];
+    char * weekday[6];
+    char * monthname[11];
     char day_sufix[4];
 
     time_t timenow = time(NULL);
@@ -15,83 +11,32 @@ static char* getdate(void)
 
     // Defining day of the week
 	// ========================
-	weekday_int = tm_timenow.tm_wday;
-	switch(weekday_int) {
-		case 0:
-			sscanf("Sunday", "%s", weekday);
-			break;
-		case 1:
-			sscanf("Monday", "%s", weekday);
-			break;
-		case 2:
-			sscanf("Tuesday", "%s", weekday);
-			break;
-		case 3:
-			sscanf("Wednesday", "%s", weekday);
-			break;
-		case 4:
-			sscanf("Thursday", "%s", weekday);
-			break;
-		case 5:
-			sscanf("Friday", "%s", weekday);
-			break;
-		case 6:
-			sscanf("Saturday", "%s", weekday);
-			break;
-		default:
-			sscanf("N/A", "%s", weekday);
-			break;
-	}
+	weekday[0] = "Sunday";
+	weekday[1] = "Monday";
+	weekday[2] = "Tuesday";
+	weekday[3] = "Wednesday";
+	weekday[4] = "Thursday";
+	weekday[5] = "Friday";
+	weekday[6] = "Saturday";
 
 	// Defining month name
 	// ===================
-	monthname_int = tm_timenow.tm_mon;
-	switch(monthname_int) {
-		case 0:
-			sscanf("January", "%s", monthname);
-			break;
-		case 1:
-			sscanf("February", "%s", monthname);
-			break;
-		case 2:
-			sscanf("March", "%s", monthname);
-			break;
-		case 3:
-			sscanf("April", "%s", monthname);
-			break;
-		case 4:
-			sscanf("May", "%s", monthname);
-			break;
-		case 5:
-			sscanf("June", "%s", monthname);
-			break;
-		case 6:
-			sscanf("July", "%s", monthname);
-			break;
-		case 7:
-			sscanf("August", "%s", monthname);
-			break;
-		case 8:
-			sscanf("September", "%s", monthname);
-			break;
-		case 9:
-			sscanf("October", "%s", monthname);
-			break;
-		case 10:
-			sscanf("November", "%s", monthname);
-			break;
-		case 11:
-			sscanf("December", "%s", monthname);
-			break;
-		default:
-			sscanf("N/D ", "%s", monthname);
-			break;
-	}
+	monthname[0] = "January";
+	monthname[1] = "February";
+	monthname[2] = "March";
+	monthname[3] = "April";
+	monthname[4] = "May";
+	monthname[5] = "June";
+	monthname[6] = "July";
+	monthname[7] = "August";
+	monthname[8] = "September";
+	monthname[9] = "October";
+	monthname[10] = "November";
+	monthname[11] = "December";
 
 	// Defining day sufix
 	// ==================
-	day_int = tm_timenow.tm_mday;
-	switch(day_int) {
+	switch(tm_timenow.tm_mday) {
 		case 1:
 			sscanf("st", "%s", day_sufix);
 			break;
@@ -106,7 +51,7 @@ static char* getdate(void)
 			break;
 	}
 
-	snprintf(fulldate, sizeof fulldate, "[%s - %s %d%s, %d]", weekday, monthname, tm_timenow.tm_mday, day_sufix, tm_timenow.tm_year + 1900);
+	snprintf(fulldate, sizeof fulldate, "[%s - %s %d%s, %d]", weekday[tm_timenow.tm_wday], monthname[tm_timenow.tm_mon], tm_timenow.tm_mday, day_sufix, tm_timenow.tm_year + 1900);
 
 	return fulldate;
 }
