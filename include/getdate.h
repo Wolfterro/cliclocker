@@ -2,9 +2,9 @@ char fulldate[128];
 
 static char* getdate(void)
 {
-    char * weekday[6];
-    char * monthname[11];
-    char day_sufix[4];
+    char * weekday[8];
+    char * monthname[16];
+    char day_sufix[8];
 
     time_t timenow = time(NULL);
     struct tm tm_timenow = *localtime(&timenow);
