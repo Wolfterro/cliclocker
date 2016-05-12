@@ -37,7 +37,7 @@ typedef struct {
 static void init(void);
 static void update_hour(void);
 static void draw_number(int n, int x, int y);
-static void draw_clock(void);
+static void draw_clock(int cb);
 static void clock_move(int x, int y);
 static void change_color(int cc);
 static void key_event(void);
@@ -45,7 +45,10 @@ static void cliclocker_main(int chcolor);
 static void signal_handler(int signal);
 
 cliclocker_t *cliclocker;
+// Change Color
 int cc = 0;
+// Change Border
+int cb = 0;
 
 static const bool number[][15] = {
     {1,1,1,1,0,1,1,0,1,1,0,1,1,1,1}, /* 0 */
@@ -167,7 +170,7 @@ static void draw_number(int n, int x, int y)
     return;
 }
 
-static void draw_clock(void)
+static void draw_clock(int cb)
 {
     /* Getting date */
     getdate();
@@ -189,9 +192,15 @@ static void draw_clock(void)
     draw_number(cliclocker->date.second[0], 1, 39);
     draw_number(cliclocker->date.second[1], 1, 46);
     /* Draw border and date */
-    wbkgdset(cliclocker->bgwin, COLOR_PAIR(1));
-    box(cliclocker->bgwin, 0, 0);
-    mvwaddstr(cliclocker->bgwin, 0, 1, fulldate);
+    if (cb == 0) {
+        wbkgdset(cliclocker->bgwin, COLOR_PAIR(1));
+        box(cliclocker->bgwin, 0, 0);
+        mvwaddstr(cliclocker->bgwin, 0, 1, fulldate);
+    }
+    else {
+        box(cliclocker->bgwin, 0, 0);
+        mvwaddstr(cliclocker->bgwin, 0, 1, fulldate);
+    }
 }
 
 static void clock_move(int x, int y)
@@ -209,7 +218,7 @@ static void change_color(int cc)
             init();
             while(cliclocker->running) {
                 update_hour();
-                draw_clock();
+                draw_clock(cb);
                 key_event();
             }
             break;
@@ -219,7 +228,7 @@ static void change_color(int cc)
             init();
             while(cliclocker->running) {
                 update_hour();
-                draw_clock();
+                draw_clock(cb);
                 key_event();
             }
             break;
@@ -229,7 +238,7 @@ static void change_color(int cc)
             init();
             while(cliclocker->running) {
                 update_hour();
-                draw_clock();
+                draw_clock(cb);
                 key_event();
             }
             break;
@@ -239,7 +248,7 @@ static void change_color(int cc)
             init();
             while(cliclocker->running) {
                 update_hour();
-                draw_clock();
+                draw_clock(cb);
                 key_event();
             }
             break;
@@ -249,7 +258,7 @@ static void change_color(int cc)
             init();
             while(cliclocker->running) {
                 update_hour();
-                draw_clock();
+                draw_clock(cb);
                 key_event();
             }
             break;
@@ -259,7 +268,7 @@ static void change_color(int cc)
             init();
             while(cliclocker->running) {
                 update_hour();
-                draw_clock();
+                draw_clock(cb);
                 key_event();
             }
             break;
@@ -269,7 +278,7 @@ static void change_color(int cc)
             init();
             while(cliclocker->running) {
                 update_hour();
-                draw_clock();
+                draw_clock(cb);
                 key_event();
             }
             break;
@@ -279,7 +288,7 @@ static void change_color(int cc)
             init();
             while(cliclocker->running) {
                 update_hour();
-                draw_clock();
+                draw_clock(cb);
                 key_event();
             }
             break;
@@ -305,6 +314,28 @@ static void key_event(void)
             else {
                 cc = 0;
                 change_color(cc);
+            }
+            break;
+        case 'b':
+            if (cb == 1) {
+                cb = 0;
+                cliclocker->running = false;
+                init();
+                while(cliclocker->running) {
+                    update_hour();
+                    draw_clock(cb);
+                    key_event();
+                }
+            }
+            else {
+                cb += 1;
+                cliclocker->running = false;
+                init();
+                while(cliclocker->running) {
+                    update_hour();
+                    draw_clock(cb);
+                    key_event();
+                }
             }
             break;
         default:
@@ -337,7 +368,8 @@ static void help(void)
     printf("  white\n\n");
 
     printf("- Press 'q' to quit the program\n");
-    printf("- Press 'c' to change foreground color\n\n");
+    printf("- Press 'c' to change foreground color\n");
+    printf("- Press 'b' to enable/disable colored border\n\n");
 
     printf("Cliclocker is a fork of cliclock from Youri \"nbyouri\" Mouton\n");
 
@@ -353,7 +385,7 @@ static void cliclocker_main(int chcolor)
     init();
     while(cliclocker->running) {
         update_hour();
-        draw_clock();
+        draw_clock(cb);
         key_event();
     }
     free(cliclocker);
