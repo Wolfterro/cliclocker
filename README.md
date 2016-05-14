@@ -37,6 +37,8 @@
 
 ###### I may add some other things in the future.
 
+![cliclocker](http://i.imgur.com/U6jYWqx.gif)
+
 ### Install:
 
 ###### You can compile the program by following these steps in the terminal, one by one:
