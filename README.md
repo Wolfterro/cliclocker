@@ -39,6 +39,14 @@
 
 ![cliclocker](http://i.imgur.com/U6jYWqx.gif)
 
+### Requirements:
+- GCC / Clang
+- ncurses-dev
+
+###### You'll need ncurses-dev to compile and execute the program. If you don't have it, you can install it from your distro's repository. There's an example on how to do it in Ubuntu/Debian/Linux Mint:
+
+    sudo apt-get install ncurses-dev
+
 ### Install:
 
 ###### You can compile the program by following these steps in the terminal, one by one:
