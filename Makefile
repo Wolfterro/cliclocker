@@ -3,7 +3,7 @@ CC = cc
 BIN = cliclocker
 INSTALLPATH = /usr/local/bin/
 CFLAGS = -Wall
-LDFLAGS = -lcurses -I include/.
+LDFLAGS = -lcurses
 
 
 cliclocker : ${SRC}

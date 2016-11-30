@@ -1,14 +1,16 @@
 /*
  * Thanks to xorg62 for tty-clock
- * And thanks to nbyouri <https://github.com/nbyouri> for the original cliclock
+ * And thanks to nbyouri <https://github.com/nbyouri> for the original cliclock!
  */
+
 #include <stdlib.h>
 #include <time.h>
 #include <ncurses.h>
 #include <signal.h>
 #include <stdbool.h>
 #include <string.h>
-#include <getdate.h>
+
+#include "include/getdate.h"
 
 typedef struct {
     bool running;
@@ -104,17 +106,18 @@ static void init(void)
 
     /* Create border win */
     cliclocker->bgwin = newwin(0,0,0,0);
+    wborder(cliclocker->bgwin, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
     nodelay(stdscr, true);
     wrefresh(cliclocker->bgwin);
+    clock_move((LINES / 2 - (cliclocker->geo.h / 2)),
+            (COLS  / 2 - (cliclocker->geo.w / 2)));
 
     /* Create clock win */ 
-    cliclocker->framewin = newwin(cliclocker->geo.h,
+    cliclocker->framewin = subwin(cliclocker->bgwin,
+	    cliclocker->geo.h,
             cliclocker->geo.w,
             cliclocker->geo.x,
             cliclocker->geo.y);
-    clock_move((LINES / 2 - (cliclocker->geo.h / 2)),
-            (COLS  / 2 - (cliclocker->geo.w / 2)));
-    wborder(cliclocker->framewin, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
     nodelay(stdscr, true);
     wrefresh(cliclocker->framewin);
 
@@ -205,7 +208,7 @@ static void draw_clock(int cb)
 
 static void clock_move(int x, int y)
 {
-    mvwin(cliclocker->framewin, (cliclocker->geo.x = x), (cliclocker->geo.y = y));
+    mvwin(cliclocker->bgwin, (cliclocker->geo.x = x), (cliclocker->geo.y = y));
     return;
 }
 
@@ -382,6 +385,8 @@ static void cliclocker_main(int chcolor)
     cliclocker = malloc(sizeof(cliclocker_t));
     cliclocker->option.color = color;
     cliclocker->option.delay = 40000000;
+    init();
+    cliclocker->running = false;
     init();
     while(cliclocker->running) {
         update_hour();
